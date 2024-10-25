@@ -1,13 +1,27 @@
-// scroll tracker
-document.addEventListener("scroll", () => {
-    const scrollPosition = window.scrollY;
-    const pageHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const progress = Math.min((scrollPosition / pageHeight), 1) * 360;
+document.addEventListener("DOMContentLoaded", () => {
+  const headings = document.querySelectorAll(".headings");
+  const sections = document.querySelectorAll(".section");
 
-  document.querySelector(
-    "#play-game-button::before"
-  ).style.background = `conic-gradient(#ff5722 ${progress}deg, #ffab40 ${progress}deg)`;
+  headings.forEach((heading) => {
+    heading.style.color = randomColor();
+  });
+
+  sections.forEach((section) => {
+    section.style.backgroundColor = randomColor();
+  });
+
+  document.body.style.backgroundColor = randomColor();
 });
+let colors = "0123456789abcdefg";
+
+function randomColor() {
+  let color = "#";
+  for (let i = 0; i < 6; i++) {
+    let random = Math.floor(Math.random() * colors.length);
+    color += colors[random];
+  }
+  return color;
+}
 
 const generated = document.querySelectorAll(".generated");
 generated.forEach((element) => {
