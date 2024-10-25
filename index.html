@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random number</title>
+    <meta name="description" content="Generate random numbers in range , flip a coin , roll a dice and much more." />
+    <meta name="keywords"
+        content="random number generator, dice roller, coin flipper , generate number randomly,multiple random number generator, heads or tails flipper, toss a coin, roll a dice" />
+    <link rel="icon" href="./images/r.png" type="image/x-icon">
+
+    <link rel="stylesheet" href="./styles.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="container">
+            <div class="section">
+                <h1>Password Generator</h1>
+                <input type="text" id="password-length" placeholder="Enter password length " title="Password length">
+                <button id="generate" onclick="generatePassword();">Generate</button>
+                <p id="password" class="password generated"></p>
+                <button id="password-copy-btn" class="copy-btn">Copy</button>
+            </div>
+
+            <div class="section">
+                <h1>OTP Generator</h1>
+                <input type="text" id="otp-length" placeholder="Enter otp length" title="Password length">
+                <button id="generate-otp" onclick="generateOtp();">Generate</button>
+                <div id="otp" class="otp generated"></div>
+                <button id="otp-copy-btn" class="copy-btn">Copy</button>
+            </div>
+
+            <div class="section">
+                <h1>Generate a Random Number</h1>
+                <button onclick="randomNumber(1,100)" label="Random Number">Generate</button>
+                <div id="randomNumber" class="value generated"></div>
+            </div>
+
+            <div class="section">
+                <h1>Random Alphabet Generator</h1>
+                <button onclick="randomAlpha()">Generate</button>
+                <div id="alphabet" class="value generated"></div>
+            </div>
+
+            <div class="section">
+                <h1>Random Number in Range</h1> <br>
+                <label for="min">Minimum</label>
+                <input type="text" id="min" label="Minimum number" title="Minimum number" placeholder="1"> <br>
+                <label for="max">Maximum</label>
+                <input type="text" id="max" label="Maximum number" title="Maximum number" placeholder="1000"> <br>
+                <button onclick="randomInRange()">Generate</button>
+                <div id="range" class="value generated"></div>
+            </div>
+
+            <div class="section">
+                <h1>Multiple Random Numbers</h1>
+                <label for="min1">Minimum</label>
+                <input type="text" id="min1" label="Minimum number" title="Minimum number" placeholder="1"> <br>
+
+                <label for="max1">Maximum</label>
+                <input type="text" id="max1" label="Maximum number" title="Maximum number" placeholder="1000"> <br>
+
+                <label for="count">Count</label>
+                <input type="text" id="count" title="Number count" placeholder="10"> <br>
+
+                <button onclick="multipleRandoms()">Generate</button>
+                <div id="range1" class="value generated"></div>
+            </div>
+
+            <div class="section">
+                <h1>Flip a Coin</h1>
+                <button onclick="coinFlipper();">Flip</button>
+                <div class="value generated" id="flip-result"></div>
+            </div>
+
+            <div class="section">
+                <h1>Roll a Dice</h1>
+                <button onclick="diceRoll();">Roll</button>
+                <div class="value generated" id="dice-result"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <button id="play-game-button" onclick="window.location.href='number-guessing-game.html'">
+        <img src="./images/console.png" alt="Play a game" class="game-pic">
+    </button>
+
+
+    <div class="notification">
+        <img src="./images/me.png" alt="Arun Neupane" />
+        <div class="details">
+            <div class="name">Copy</div>
+            <div class="message">Text copied to clipboard</div>
+        </div>
+        <span class="material-icons-round btn" onclick="closeNote()">close</span>
+    </div>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-info">
+                <p>&copy; 2024 Arun Neupane. All rights reserved.</p>
+                <p>Made with ❤️ by Arun Neupane</p>
+                <p>For Learning and Development</p>
+            </div>
+            <div class="footer-links">
+                <a href="#info-section">About</a>
+                <a href="https://allunitconverter.netlify.app/privacy">Privacy Policy</a>
+                <a href="https://allunitconverter.netlify.app/contact">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="./script.js"></script>
+</body>
+
+</html>

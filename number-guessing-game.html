@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Guessing Game</title>
+    <meta name="description" content="Simple number guessing game with hints to play in your free time." />
+    <meta name="keywords"
+        content="Number guessing game, simple game, guessing game, random number game, random number generator, " />
+    <link rel="icon" href="./images/r.png" type="image/x-icon">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: sans-serif;
+        }
+
+        body {
+            overflow-x: hidden;
+        }
+
+        .wrapper {
+            padding: 1rem;
+            width: 100vw;
+            height: 90svh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            background-color: rgb(236, 134, 179);
+        }
+
+        p {
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            border: 1px solid black;
+            padding: 1rem;
+            border-radius: 20px;
+            background-color: white;
+            margin-right: 1rem;
+        }
+
+        #replay {
+            display: none;
+        }
+
+        button {
+            font-size: 1rem;
+            padding: 0.65rem 2.5rem;
+            height: 40px;
+            border-radius: 20px;
+            border: none;
+            cursor: pointer;
+            color: white;
+            background-color: rgb(184, 69, 216);
+        }
+
+        input[type="text"] {
+            padding: 0.4rem 0.65rem;
+            outline: none;
+            font-size: 1rem;
+            border: 0.5px solid black;
+            border-radius: 10px;
+        }
+
+        ul {
+            list-style: none;
+            font-size: 1rem;
+            font-family: roboto;
+            margin-top: 1rem;
+        }
+
+        #oddoreven-btn {
+            background-color: rgb(50, 210, 87);
+        }
+
+        #prime-btn {
+            background-color: rgb(30, 90, 168);
+        }
+
+        #multiple-btn {
+            padding: 0.65rem 2rem;
+            background-color: rgb(47, 155, 167);
+        }
+
+        .how {
+            margin-top: 3rem;
+            width: 100%;
+            height: 1.3rem;
+            overflow: hidden;
+            cursor: Pointer;
+            transition: height 1s ease-in-out;
+            text-align: justify;
+        }
+
+        .active {
+            height: 10rem;
+        }
+
+        b {
+            font-size: 1.1rem;
+        }
+
+        /* footer */
+        footer {
+            background-color: #007bff;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .footer-info p {
+            margin: 5px 0;
+            font-size: 0.9rem;
+        }
+
+        .footer-links {
+            margin-top: 10px;
+        }
+
+        .footer-links a {
+            color: white;
+            margin: 0 10px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #fff;
+        }
+
+        .warning {
+            color: red;
+        }
+
+        .win {
+            font-size: 1.25rem;
+            color: purple;
+        }
+
+        /* Floating Play Button */
+        #home-button {
+            padding: 0;
+            width: 45px;
+            height: 45px;
+            position: fixed;
+            top: 5px;
+            left: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #fff;
+            border-radius: 50%;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+            z-index: 999;
+        }
+
+        .home-pic {
+            height: 35px;
+            width: 35px;
+        }
+
+        #home-button:hover {
+            background-color: rgba(235, 235, 235, 0.9);
+            transform: translateY(-2px);
+        }
+
+        #home-button:active {
+            transform: translateY(2px);
+        }
+
+        @media (max-width:768px) {
+            button {
+                padding: 0.5rem 1.3rem;
+            }
+
+            #multiple-btn {
+                padding: 0.5rem 1.2rem;
+                background-color: rgb(47, 155, 167);
+            }
+
+            .section {
+                flex: 1 1 100%;
+            }
+
+        }
+
+        @media (max-width:460px) {
+            .active {
+                height: 15rem;
+            }
+        }
+
+        @media (max-width:350px) {
+
+            button,
+            input[type="text"] {
+                margin-bottom: 1rem;
+                width: 100%;
+                display: block;
+            }
+
+            .active {
+                height: 15rem;
+                margin-bottom: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="container">
+            <h1>Number Guessing game</h1>
+            <p>Guess the random number between (1-100).You get three chances. Using hints, guess the random number.</p>
+            <input type="text" id="input-text" placeholder="Enter your guess" title="Enter a number between 1 and 100">
+            <button id="guess">Guess</button>
+            <button id="replay">Replay</button>
+            <ul id="hints"></ul>
+            <ul>
+                <li>
+                    <button id="oddoreven-btn" title="Check whether number is odd or even">Odd?</button>
+                    <button id="prime-btn" title="Check if number is a prime">Prime?</button>
+                    <button id="multiple-btn" title="Find out greatest multiple">Multiple?</button>
+                </li>
+            </ul>
+            <ul id="guesses"></ul>
+            <p id="how" class="how">
+                <span id="close">></span>
+                <b> How to Play?</b> <br>
+                You can enter your guess in the input box.After typing in your guess press Enter or Guess button . <br>
+                You can use one of 3 hints : <br>
+                1. Odd? It will tell you whether number is odd or even. <br>
+                2. Prime? It will tell you whether number is prime or not. <br>
+                3. Multiple? It will give you the highest multiple of the random number. <br>
+            </p>
+        </div>
+    </div>
+    <button id="home-button" onclick="window.location.href='index.html'">
+        <img src="./images/home-button.png" alt="Home btn" class="home-pic">
+    </button>
+    <footer>
+        <div class="footer-container">
+            <div class="footer-info">
+                <p>&copy; 2024 Arun Neupane. All rights reserved.</p>
+                <p>Made with ❤️ by Arun Neupane</p>
+                <p>For Learning and Development</p>
+            </div>
+            <div class="footer-links">
+                <a href="#how" id="about">About</a>
+                <a href="https://allunitconverter.netlify.app/privacy">Privacy Policy</a>
+                <a href="https://allunitconverter.netlify.app/contact">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let count = 0;
+        let random = Math.floor(Math.random() * (100)) + 1;
+
+        const inputText = document.getElementById("input-text");
+        const guessBtn = document.getElementById("guess");
+        const guesses = document.getElementById("guesses");
+        const replay = document.getElementById("replay");
+
+        const oddoreven = document.getElementById("oddoreven-btn");
+        const prime = document.getElementById("prime-btn");
+        const multiple = document.getElementById("multiple-btn");
+        const Hints = document.getElementById("hints");
+        const how = document.getElementById("how");
+        how.addEventListener("click", () => {
+            how.classList.toggle("active");
+            if (document.getElementById("close").textContent == ">") {
+                document.getElementById("close").innerHTML = "v";
+            } else {
+                document.getElementById("close").innerHTML = ">";
+            }
+        })
+
+        document.getElementById("about").addEventListener("click", () => how.click());
+
+        oddoreven.addEventListener("click", () => {
+            let text = hintsOddOrEven(random);
+            hideHints(text);
+        });
+
+        multiple.addEventListener("click", () => {
+            let text = hintsMultipleOf(random);
+            hideHints(text);
+        });
+
+        prime.addEventListener("click", () => {
+            let text = hintsPrime(random);
+            hideHints(text);
+        });
+
+        function hideHints(text) {
+            oddoreven.style.display = "none";
+            prime.style.display = "none";
+            multiple.style.display = "none";
+            let li = document.createElement("li");
+            li.textContent = text;
+            Hints.appendChild(li);
+
+        }
+
+        inputText.addEventListener("keyup", (event) => {
+            if (event.key === "Enter") {
+                guessBtn.click();
+            }
+        })
+
+        guessBtn.addEventListener("click", () => {
+
+            let list = document.createElement("li");
+            let num = parseInt(inputText.value);
+            if (inputText.value === "") {
+                list.textContent = "Please enter a number!";
+                list.className = "warning";
+                guesses.appendChild(list);
+                setTimeout(() => guesses.removeChild(list), 3000);
+                inputText.value = "";
+                return;
+            }
+            if (num < 1 || num > 100) {
+                list.textContent = "Please enter between 1-100 ";
+                list.className = "warning";
+                guesses.appendChild(list);
+                setTimeout(() => guesses.removeChild(list), 3000);
+                inputText.value = "";
+                return;
+            }
+            if (num === random) {
+                list.textContent = random + " is the random Number. Congratulations.";
+                list.className = "win";
+                guesses.appendChild(list);
+                flipButton(guess, replay);
+                inputText.value = "";
+                inputText.style.display = "none";
+            }
+            else {
+                count++;
+                checkClose(num, random);
+                inputText.value = "";
+            }
+            if (count >= 3) {
+                list.textContent = "Out of moves! Random number is " + random;
+                list.className = "warning";
+                guesses.appendChild(list);
+                flipButton(guess, replay);
+                inputText.value = "";
+                inputText.style.display = "none";
+            }
+        });
+
+        replay.addEventListener("click", reset);
+
+        function checkClose(input, random) {
+            let list = document.createElement("li");
+            if (input < random) {
+                if (input + 10 >= random)
+                    list.textContent = input + " You are close.Try higher.";
+
+                else
+                    list.textContent = input + " Try higher.";
+
+            }
+            else {
+                if (input - 10 <= random)
+                    list.textContent = input + " You are close.Try lower.";
+
+                else
+                    list.textContent = input + " Try lower.";
+
+            }
+            guesses.appendChild(list);
+
+        }
+
+        function flipButton(guess, replay) {
+            guess.style.display = "none";
+            replay.style.display = "inline";
+        }
+
+        function reset() {
+            guessBtn.style.display = "inline";
+            replay.style.display = "none";
+            inputText.value = "";
+            count = 0;
+            random = Math.floor(Math.random() * (100)) + 1;
+            guesses.innerHTML = "";
+            inputText.style.display = "inline";
+            oddoreven.style.display = "inline";
+            prime.style.display = "inline";
+            multiple.style.display = "inline";
+            Hints.textContent = "";
+        }
+
+        function hintsPrime(num) {
+            let isprime = true;
+            for (let i = 2; i < Math.sqrt(num); i++) {
+                if (num % i == 0)
+                    return "Number is not a prime";
+            }
+            return "Number is a prime";
+        }
+
+        function hintsOddOrEven(num) {
+            if (num % 2 == 0) {
+                return "Number is even";
+            }
+            else {
+                return "Number is odd";
+            }
+        }
+
+        function hintsMultipleOf(num) {
+            for (let i = num - 1; i >= 1; i--) {
+                if (num % i == 0) {
+                    return "Number is a multiple of " + i;
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
